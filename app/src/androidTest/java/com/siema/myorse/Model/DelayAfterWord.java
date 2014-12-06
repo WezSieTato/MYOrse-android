@@ -11,4 +11,7 @@ public class DelayAfterWord extends Delay {
 	public DelayAfterWord(double time) {
 		super(9*time);
 	}
+
+	public DelayAfterWord() {
+	}
 }

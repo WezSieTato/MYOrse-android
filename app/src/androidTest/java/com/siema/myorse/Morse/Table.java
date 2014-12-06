@@ -30,6 +30,10 @@ public class Table{
 		return content.size();
 	}
 	
+	public boolean isContains(Character character){
+		return content.containsKey(character);
+	}
+	
 	protected Map<Character, List<Char> > content;
 
 }

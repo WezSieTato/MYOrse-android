@@ -12,4 +12,7 @@ public class DelayAfterChar extends Delay {
 	public DelayAfterChar(double time) {
 		super(time);
 	}
+
+	public DelayAfterChar() {
+	}
 }
