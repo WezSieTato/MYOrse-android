@@ -15,10 +15,10 @@ public class Main {
 		MessagePreparator mp = new MessagePreparator(table);
 		Translator translator = new Translator(table);
 		
-		String newmsg = mp.prepareMessage("Siema! Co tam?!!!! x x x");
+		String newmsg = mp.prepareMessage("Ab cD...");
 		
 		
-		 System.out.println(translator.translate(newmsg));
+		System.out.println(translator.translate(newmsg));
 	}
 
 }

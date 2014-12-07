@@ -22,7 +22,7 @@ public class Translator {
 	public List<Char> translate(String text){
 		List<Char> message = new ArrayList<Char>();
 		
-		for(int i = 0; i < text.length(); i++){
+		for(int i = 0; i < text.length(); i++) {
 			Character c = text.charAt(i);
 			
 			if(c == ' ')
@@ -32,15 +32,21 @@ public class Translator {
 			}
 			else
 			{
-				if(!addMorseCharToArray(message, c))
-					System.out.println("TRANSLATOR ERROR!");
+				if(i != text.length() - 1 && text.charAt(i+1) != ' ') {
+					if(!addMorseCharToArray(message, c, true))
+						System.out.println("TRANSLATOR ERROR!");
+				}
+				else {
+					if(!addMorseCharToArray(message, c, false))
+						System.out.println("TRANSLATOR ERROR!");
+				}
 			}
 		}
 	
 		return message;
 	}
 	
-	private boolean addMorseCharToArray(List<Char> array, char c){
+	private boolean addMorseCharToArray(List<Char> array, char c, boolean delay){
 		List<Char> list = morseTable.codeForKey(c);
 		
 		for(Char e : list){
@@ -48,8 +54,9 @@ public class Translator {
 				return false;	
 		}
 		
-		if(!array.add(new DelayAfterChar()))
-			return false;
+		if(delay)
+			if(!array.add(new DelayAfterChar()))
+				return false;
 			
 		return true;	
 	}
