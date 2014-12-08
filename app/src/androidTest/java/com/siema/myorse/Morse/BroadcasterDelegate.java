@@ -1,8 +1,6 @@
 package Morse;
 
-public class BroadcasterDelegate {
+public interface BroadcasterDelegate {
 
-	public void broadcasterDidEndTransmition(Broadcaster morseTransmitter) {
-		
-	}
+	public void broadcasterDidEndTransmition(Broadcaster morseTransmitter);
 }

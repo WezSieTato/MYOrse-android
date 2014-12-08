@@ -13,8 +13,8 @@ public class Broadcaster {
 	
 	
 
-	// + delegate;
-	// + transmitter;
+	BroadcasterDelegate broadcasterDelegate;
+	Transmitter transmitter;
 	
 	public void sendMessage(String message){
 		// TODO dokoñczyæ funkcjê
