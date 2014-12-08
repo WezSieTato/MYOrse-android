@@ -8,12 +8,15 @@
     <string name="connect_with">Łączność z:</string>
     <string name="not_available">Nie nawiązano</string>
     <string name="pick_person">Wybierz nadawce</string>
+    <string name="sms_sending">Wysyłaj smsy:</string>
+
+    <string name="no_number_phone">Wybrany kontakt, nie posiada numeru telefonu!</string>
 
     <string name="START_MYORSE_SERVICE">Uruchom odbiornik</string>
     <string name="STOP_MYORSE_SERVICE">Zatrzymaj odbiornik</string>
-    <string name="START_MYORSE_MESSAGE">Twój rozmowca korzysta teraz z programu MYOrse, będzie odbieral twoje wiadomości w alfabecie Morse\'a, dlatego staraj się pisać krótkie i zwięzłe wiadomości, gdy twój rozmówca odczyta wiadomość dostaniesz wiadomość zwrotną!</string>
+    <string name="START_MYORSE_MESSAGE">Twój rozmowca korzysta teraz z programu MYOrse.</string>
     <string name="STOP_MYORSE_MESSAGE">Twój rozmówca rozłączył się z MYOrse!</string>
-    <string name="TRANSMITTION_MORSE_STARTED">Twój rozmówca właśnie odsłuchuje twoją wiadomość, wstrzymaj się z wysłaniem kolejnej, póki nie otrzymasz wiadomości zwrotnej!</string>
+    <string name="TRANSMITTION_MORSE_STARTED">Twój rozmówca właśnie odsłuchuje twoją wiadomość!</string>
     <string name="TRANSMITTION_MORSE_ENDED">Twój rozmówca właśnie odsłuchał twoją wiadomość, możesz nadać kolejną!</string>
 
 </resources>
