@@ -1,20 +1,21 @@
-package Morse;
+package com.siema.morse;
 
 
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
-import Model.Char;
+import com.siema.morse.model.Char;
 
 /**
- * Klasa tablicy zawieraj¹cej mapê znaków i ich zapisu za pomoc¹ Morse'a
+ * Klasa tablicy zawierajï¿½cej mapï¿½ znakï¿½w i ich zapisu za pomocï¿½ Morse'a
  * 
  * @author Quetz
  * 
  */
 public class Table{
-	
-	public Table(){
+    private Map<Character, List<Char> > content;
+
+    public Table(){
 		content = new HashMap<Character, List<Char>>();
 	}
 	
@@ -33,7 +34,5 @@ public class Table{
 	public boolean isContains(Character character){
 		return content.containsKey(character);
 	}
-	
-	protected Map<Character, List<Char> > content;
 
 }

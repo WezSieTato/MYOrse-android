@@ -1,4 +1,4 @@
-package Model;
+package com.siema.morse.model;
 
 /**
  * Klasa kropki
@@ -12,6 +12,6 @@ public class Dot extends SoundChar  {
 	}
 
 	public Dot() {
-		super();
+		super(defaultTime);
 	}
 }

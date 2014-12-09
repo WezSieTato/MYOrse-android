@@ -1,7 +1,7 @@
-package Model;
+package com.siema.morse.model;
 
 /**
- * Klasa znaku w³aœciwego (sygnalizowanego dŸwiêkiem/wibracj¹)
+ * Klasa znaku wï¿½aï¿½ciwego (sygnalizowanego dï¿½wiï¿½kiem/wibracjï¿½)
  * 
  * @author Quetz
  * 

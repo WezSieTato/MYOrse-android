@@ -1,7 +1,7 @@
-package Model;
+package com.siema.morse.model;
 
 /**
- * Klasa opóŸnienia miêdzy s³owami
+ * Klasa opï¿½nienia miï¿½dzy sï¿½owami
  * 
  * @author Quetz
  * 
@@ -13,5 +13,6 @@ public class DelayAfterWord extends Delay {
 	}
 
 	public DelayAfterWord() {
+        super(defaultTime * 9);
 	}
 }

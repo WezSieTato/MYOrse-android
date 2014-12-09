@@ -1,7 +1,7 @@
-package Model;
+package com.siema.morse.model;
 
 /**
- * Klasa opóŸnienia
+ * Klasa opï¿½nienia
  * 
  * @author Quetz
  * 

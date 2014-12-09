@@ -1,4 +1,4 @@
-package Model;
+package com.siema.morse.model;
 
 /**
  * Klasa znaku
@@ -6,8 +6,8 @@ package Model;
  * @author Quetz
  * 
  * 
- * 	@param emitSound okreœla czy ma byæ emitowany dŸwiêk
- *  @param time okreœla d³ugoœæ trwania znaku (sygna³u)
+ * 	@param emitSound okreï¿½la czy ma byï¿½ emitowany dï¿½wiï¿½k
+ *  @param time okreï¿½la dï¿½ugoï¿½ï¿½ trwania znaku (sygnaï¿½u)
  *  @param defaultTime defaultowy czas w konstruktorze bezargumentowym
  */
 public abstract class Char {

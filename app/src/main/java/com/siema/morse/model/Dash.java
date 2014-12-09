@@ -1,4 +1,4 @@
-package Model;
+package com.siema.morse.model;
 
 /**
  * Klasa kreski

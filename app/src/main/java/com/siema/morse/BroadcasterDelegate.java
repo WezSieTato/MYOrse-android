@@ -1,4 +1,4 @@
-package Morse;
+package com.siema.morse;
 
 public interface BroadcasterDelegate {
 

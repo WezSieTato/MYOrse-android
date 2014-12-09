@@ -1,22 +1,27 @@
-package Morse;
+package com.siema.morse;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.Char;
-import Model.DelayAfterChar;
-import Model.DelayAfterWord;
+import com.siema.morse.model.*;
+
 
 /**
- * Klasa t³umacz¹ca wiadomoœci w String'u na jêzyk Morse'a
+ * Klasa tï¿½umaczï¿½ca wiadomoï¿½ci w String'u na jï¿½zyk Morse'a
  * 
  * @author Quetz
  * 
  */
 public class Translator {
 
+    private Table morseTable;
+    private DelayAfterChar delayChar;
+    private DelayAfterWord delayWord;
+
 	public Translator(Table table) {
-		this.morseTable = table;		
+		this.morseTable = table;
+        delayChar = new DelayAfterChar();
+        delayWord = new DelayAfterWord();
 	}
 	
 	public List<Char> translate(String text){
@@ -55,18 +60,18 @@ public class Translator {
 		}
 		
 		if(delay)
-			if(!array.add(new DelayAfterChar()))
+			if(!array.add(delayChar))
 				return false;
 			
 		return true;	
 	}
 	
 	private boolean addWordSpaceToArray(List<Char> array, Character c){
-		if(!array.add(new DelayAfterWord()))
+		if(!array.add(delayWord))
 			return false;	
 		
 		return true;	
 	}
 	
-	protected Table morseTable;
+
 }

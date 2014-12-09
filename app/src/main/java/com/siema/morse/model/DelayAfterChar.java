@@ -1,7 +1,7 @@
-package Model;
+package com.siema.morse.model;
 
 /**
- * Klasa opóŸnienia miêdzy znakami (literami, interpunkcj¹, liczbami)
+ * Klasa opï¿½nienia miï¿½dzy znakami (literami, interpunkcjï¿½, liczbami)
  * 
  * @author Quetz
  * 
@@ -14,5 +14,6 @@ public class DelayAfterChar extends Delay {
 	}
 
 	public DelayAfterChar() {
+        super(defaultTime * 3);
 	}
 }

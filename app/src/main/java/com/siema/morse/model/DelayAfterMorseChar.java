@@ -1,7 +1,7 @@
-package Model;
+package com.siema.morse.model;
 
 /**
- * Klasa opóŸnienia miêdzy znakami Morse'a (kreski/kropki)
+ * Klasa opï¿½nienia miï¿½dzy znakami Morse'a (kreski/kropki)
  * 
  * @author Quetz
  * 
@@ -10,9 +10,10 @@ package Model;
  */
 public class DelayAfterMorseChar extends Delay {
 	public DelayAfterMorseChar(double time) {
-		super(3*time);
+		super(time);
 	}
 
 	public DelayAfterMorseChar() {
+        super(defaultTime);
 	}
 }

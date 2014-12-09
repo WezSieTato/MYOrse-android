@@ -1,7 +1,7 @@
-package Morse;
+package com.siema.morse;
 
 /**
- * Klasa odpowiedzialna za transmisjê informacji Morse'm
+ * Klasa odpowiedzialna za transmisjï¿½ informacji Morse'm
  * 
  * @author Quetz
  * 
@@ -10,14 +10,12 @@ public class Broadcaster {
 	public Broadcaster(Translator translator){
 		this.translator = translator;		
 	}
-	
-	
 
-	BroadcasterDelegate broadcasterDelegate;
-	Transmitter transmitter;
+	private BroadcasterDelegate broadcasterDelegate;
+	private Transmitter transmitter;
 	
 	public void sendMessage(String message){
-		// TODO dokoñczyæ funkcjê
+		// TODO dokoï¿½czyï¿½ funkcjï¿½
 	}
 	
 	String message;
