@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.*;
 
 @RunWith(RobolectricGradleTestRunner.class)
-public class RobolectricModelTests {
+public class RobolectricModelTest {
 
     @Test
     public void testDot() throws Exception {
