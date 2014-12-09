@@ -7,7 +7,7 @@ package com.siema.morse.model;
  * 
  */
 public class Dot extends SoundChar  {
-	public Dot(double time){
+	public Dot(long time){
 		super(time);	
 	}
 

@@ -9,7 +9,7 @@ package com.siema.morse.model;
  * 
  */
 public abstract class Delay extends Char {
-	Delay(double time){
+	Delay(long time){
 		super(false, time);
 	}
 	

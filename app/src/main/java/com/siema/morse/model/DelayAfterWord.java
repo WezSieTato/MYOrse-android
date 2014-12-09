@@ -8,7 +8,7 @@ package com.siema.morse.model;
  * 
  */
 public class DelayAfterWord extends Delay {
-	public DelayAfterWord(double time) {
+	public DelayAfterWord(long time) {
 		super(9*time);
 	}
 
