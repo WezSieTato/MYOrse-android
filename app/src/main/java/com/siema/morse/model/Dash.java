@@ -13,5 +13,6 @@ public class Dash extends SoundChar {
 	}
 
 	public Dash() {
+        super(3 * defaultTime);
 	}
 }

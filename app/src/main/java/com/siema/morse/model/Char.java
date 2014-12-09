@@ -16,12 +16,12 @@ public abstract class Char {
 	private boolean emitSound;
     private long time;
 
-    public Char(boolean emitSound, long time){
+    protected Char(boolean emitSound, long time){
 		this.emitSound = emitSound;
 		this.time = time;	
 	}
 
-    public Char(boolean emitSound){
+    protected Char(boolean emitSound){
 		this.emitSound = emitSound;
 		this.time = defaultTime;	
 	}

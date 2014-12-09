@@ -9,11 +9,11 @@ package com.siema.morse.model;
  * 
  */
 public abstract class Delay extends Char {
-	Delay(long time){
+	protected Delay(long time){
 		super(false, time);
 	}
-	
-	Delay(){
+
+    protected Delay(){
 		super(false);
 	}
 }
