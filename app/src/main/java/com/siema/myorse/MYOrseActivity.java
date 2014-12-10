@@ -1,8 +1,10 @@
 package com.siema.myorse;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,12 +21,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 public class MYOrseActivity extends Activity {
 
     private final int PICK_CONTACT = 666;
+    private final String PreferencesKey = "MYOrsePreferencesKey";
+    private final String PreferencesKeyName = "MYOrsePreferencesKeyName";
+    private final String PreferencesKeyPhone = "MYOrsePreferencesKeyPhone";
+    private final String PreferencesKeyBool = "MYOrsePreferencesKeyBool";
+
     private MYOrseListener listener;
 
     private TextView lblUsername;
@@ -36,19 +45,36 @@ public class MYOrseActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myorse);
-        listener = new MYOrseListener(getApplicationContext());
 
+        lblUsername = (TextView) findViewById(R.id.lblUsername);
+        btnStartStop = (Button) findViewById(R.id.btnStartStop);
+        btnPickContact = (Button) findViewById(R.id.btnPickContact);
+        checkBoxSMS = (CheckBox) findViewById(R.id.checkBoxSMS);
+
+        Context context = getApplicationContext();
+        listener = new MYOrseListener(context);
         registerReceiver(listener, new IntentFilter("android.provider.Telephony.SMS_RECEIVED"));
+
+        SharedPreferences preferences = context.getSharedPreferences(PreferencesKey, Context.MODE_PRIVATE);
+        boolean isSaved = preferences.getBoolean(PreferencesKeyBool, false);
+
+        if (isSaved) {
+            String name = preferences.getString(PreferencesKeyName, "");
+            Set<String> setPhones = preferences.getStringSet(PreferencesKeyPhone, null);
+            List<String> listPhones = new ArrayList<String>(setPhones);
+
+            ContactInfo info = new ContactInfo(name);
+            info.setPhoneNumbers(listPhones);
+            setContact(info, false);
+
+        }
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.myorse, menu);
-        lblUsername = (TextView) findViewById(R.id.lblUsername);
-        btnStartStop = (Button) findViewById(R.id.btnStartStop);
-        btnPickContact = (Button) findViewById(R.id.btnPickContact);
-        checkBoxSMS = (CheckBox) findViewById(R.id.checkBoxSMS);
 
         return true;
     }
@@ -81,10 +107,26 @@ public class MYOrseActivity extends Activity {
 
     }
 
-    private void setContact(ContactInfo info) {
+    private void setContact(ContactInfo info, boolean save) {
         listener.setUsername(info);
         lblUsername.setText(info.getName());
         btnStartStop.setEnabled(true);
+
+        if (save) {
+            Context context = getApplicationContext();
+            SharedPreferences preferences = context.getSharedPreferences(PreferencesKey, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString(PreferencesKeyName, info.getName());
+
+            Set<String> setPhones = new HashSet<String>(info.getPhoneNumbers());
+            editor.putStringSet(PreferencesKeyPhone, setPhones);
+            editor.putBoolean(PreferencesKeyBool, true);
+            editor.commit();
+        }
+    }
+
+    private void setContact(ContactInfo info) {
+        setContact(info, true);
     }
 
     @Override
