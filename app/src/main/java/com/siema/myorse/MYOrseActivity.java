@@ -24,7 +24,7 @@ import java.util.Set;
 public class MYOrseActivity extends Activity {
 
     private final int PICK_CONTACT = 666;
-    private final String PreferencesKey = "MYOrsePreferencesKey";
+    public static final String PreferencesKey = "MYOrsePreferencesKey";
     private final String PreferencesKeyName = "MYOrsePreferencesKeyName";
     private final String PreferencesKeyPhone = "MYOrsePreferencesKeyPhone";
     private final String PreferencesKeyBool = "MYOrsePreferencesKeyBool";
