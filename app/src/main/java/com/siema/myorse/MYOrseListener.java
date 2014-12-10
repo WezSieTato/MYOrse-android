@@ -7,31 +7,37 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.widget.Toast;
 
+import com.siema.morse.Broadcaster;
+import com.siema.morse.BroadcasterDelegate;
+import com.siema.morse.Table;
+import com.siema.morse.TableReader;
+import com.siema.morse.Translator;
+
 /**
  * Created by marcin on 08/12/14.
  */
-public class MYOrseListener extends BroadcastReceiver {
+public class MYOrseListener extends BroadcastReceiver implements BroadcasterDelegate {
 
     private boolean enabled;
+    private boolean transmitting;
     private boolean enabledSMSSending;
     private ContactInfo username;
     private String phoneNumber;
+    private Context context;
+    private Broadcaster broadcaster;
 
-    public Context getContex() {
-        return contex;
-    }
-
-    public void setContex(Context contex) {
-        this.contex = contex;
-    }
-
-    private Context contex;
-
-    public MYOrseListener() {
+    public MYOrseListener(Context context) {
         super();
         username = null;
         enabled = false;
         phoneNumber = null;
+        this.context = context;
+
+        Table morseTable = TableReader.readFile(context.getResources().openRawResource(R.raw.morse_table));
+        Translator translator = new Translator(morseTable);
+        broadcaster = new Broadcaster(translator);
+        broadcaster.setBroadcasterDelegate(this);
+        broadcaster.setTransmitter(new MYOTransmitter());
     }
 
     public boolean isEnabledSMSSending() {
@@ -57,26 +63,24 @@ public class MYOrseListener extends BroadcastReceiver {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
 
-
         if (enabledSMSSending) {
-            String msg = contex.getString(enabled ? R.string.START_MYORSE_MESSAGE : R.string.STOP_MYORSE_MESSAGE);
+            String msg = context.getString(enabled ? R.string.START_MYORSE_MESSAGE : R.string.STOP_MYORSE_MESSAGE);
 
             for (String number : username.getPhoneNumbers()) {
-            Toast.makeText(contex, "Wysylam SMSa powiadamiającego: " + number, 5 * (Toast.LENGTH_LONG)).show();
+            Toast.makeText(context, "Wysylam SMSa powiadamiającego: " + number, 5 * (Toast.LENGTH_LONG)).show();
                 SMSSender.sendMessage(number, msg);
             }
         }
     }
 
     public boolean isTransmitting() {
-        //TO DO!
-        return false;
+        return transmitting;
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        if (!enabled && username == null)
+        if (!enabled || username == null || isTransmitting())
             return;
 
         //---get the SMS message passed in---
@@ -100,8 +104,7 @@ public class MYOrseListener extends BroadcastReceiver {
 
             if (username.hasThisPhoneNumber(senderPhoneNumber)) {
                 Toast.makeText(context, senderPhoneNumber + messageReceived, Toast.LENGTH_LONG).show();
-                startTransmission(senderPhoneNumber);
-
+                startTransmission(senderPhoneNumber, messageReceived);
 
             } else {
                 Toast.makeText(context, "Nie zalapalo sendera", 5 * (Toast.LENGTH_LONG)).show();
@@ -109,12 +112,21 @@ public class MYOrseListener extends BroadcastReceiver {
         }
     }
 
-    public void startTransmission(String phoneNumber) {
+    public void startTransmission(String phoneNumber, String message) {
         this.phoneNumber = phoneNumber;
-
+        transmitting = true;
         if (enabledSMSSending) {
-            SMSSender.sendMessage(phoneNumber, contex.getString(R.string.TRANSMITTION_MORSE_STARTED));
+            SMSSender.sendMessage(phoneNumber, context.getString(R.string.TRANSMITTION_MORSE_STARTED));
         }
+
+        broadcaster.sendMessage(message);
+
     }
 
+    @Override
+    public void broadcasterDidEndTransmition(Broadcaster morseTransmitter) {
+        transmitting = false;
+        phoneNumber = null;
+        SMSSender.sendMessage(phoneNumber, context.getString(R.string.TRANSMITTION_MORSE_ENDED));
+    }
 }

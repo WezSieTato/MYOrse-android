@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,13 +19,13 @@ import com.siema.morse.model.*;
  */
 public class TableReader {
 
-    public static Table readFile(String path) {
-        File file = new File(path);
+    public static Table readFile(InputStream is) {
+//        File file = new File(path);
         Table table = new Table();
 
         try {
 
-            BufferedReader reader = new BufferedReader(new FileReader(file));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             String text = null;
             Dot dot = new Dot();
             Dash dash = new Dash();

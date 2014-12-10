@@ -33,8 +33,6 @@ public class Broadcaster {
 	}
 
     public void sendMessage(String message){
-        // TODO doko�czy� funkcj�
-
         this.message = message;
         this.code = translator.translate(message);
         iterator = code.iterator();

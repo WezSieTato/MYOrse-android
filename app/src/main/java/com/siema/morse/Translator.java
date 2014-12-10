@@ -17,15 +17,19 @@ public class Translator {
     private Table morseTable;
     private DelayAfterChar delayChar;
     private DelayAfterWord delayWord;
+    private MessagePreparator preparator;
 
 	public Translator(Table table) {
 		this.morseTable = table;
         delayChar = new DelayAfterChar();
         delayWord = new DelayAfterWord();
+        preparator = new MessagePreparator(table);
 	}
 	
 	public List<Char> translate(String text){
 		List<Char> message = new ArrayList<Char>();
+
+        text = preparator.prepareMessage(text);
 		
 		for(int i = 0; i < text.length(); i++) {
 			Character c = text.charAt(i);

@@ -36,8 +36,8 @@ public class MYOrseActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myorse);
-        listener = new MYOrseListener();
-        listener.setContex(getApplicationContext());
+        listener = new MYOrseListener(getApplicationContext());
+
         registerReceiver(listener, new IntentFilter("android.provider.Telephony.SMS_RECEIVED"));
     }
 
