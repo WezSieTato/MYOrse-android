@@ -1,7 +1,13 @@
 package com.siema.morse;
 
-import java.security.Timestamp;
-
 public interface Transmitter {
-	public void transmit(double time);
+    /**
+     *
+     * @param time
+     * @return true if function really transmit signal
+     */
+    public boolean transmit(double time);
+
+    public void transmitShort();
+    public void transmitLong();
 }

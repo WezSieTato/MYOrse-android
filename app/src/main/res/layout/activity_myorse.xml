@@ -77,6 +77,34 @@
         android:layout_below="@+id/view"
         android:layout_alignRight="@+id/view"
         android:layout_alignEnd="@+id/view"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:id="@+id/view1"
+        android:layout_below="@+id/checkBoxSMS"
+        android:layout_alignEnd="@+id/checkBoxSMS" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="MYO"
+        android:id="@+id/textView3"
+        android:layout_below="@+id/view1"
+        android:layout_alignParentStart="true"
         android:layout_marginTop="10dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/action_settings"
+        android:id="@+id/btnMYO"
+        android:layout_below="@+id/view1"
+        android:layout_alignEnd="@+id/checkBoxSMS"
+        android:onClick="buttonMYOOnClick" />
 
 </RelativeLayout>

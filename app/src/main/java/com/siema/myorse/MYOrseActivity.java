@@ -7,13 +7,15 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.thalmic.myo.Hub;
+import com.thalmic.myo.scanner.ScanActivity;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -64,15 +66,21 @@ public class MYOrseActivity extends Activity {
 
         }
 
+        Hub hub = Hub.getInstance();
+        if (!hub.init(this)) {
+//            finish();
+//            return;
+        }
+
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.myorse, menu);
-
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.myorse, menu);
+//
+//        return true;
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -100,6 +108,12 @@ public class MYOrseActivity extends Activity {
         String txt = getString(enabled ? R.string.START_MYORSE_SERVICE : R.string.STOP_MYORSE_SERVICE);
         btnStartStop.setText(txt);
 
+    }
+
+    public void buttonMYOOnClick(View v){
+        Context context = getApplicationContext();
+        Intent intent = new Intent(context, ScanActivity.class);
+        context.startActivity(intent);
     }
 
     private void setContact(ContactInfo info, boolean save) {
