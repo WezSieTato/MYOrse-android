@@ -112,7 +112,8 @@ public class MYOrseActivity extends Activity {
 
     public void buttonMYOOnClick(View v){
         Context context = getApplicationContext();
-        Intent intent = new Intent(context, ScanActivity.class);
+        Intent intent = new Intent(MYOrseActivity.this, ScanActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
