@@ -1,12 +1,12 @@
 package com.siema.morse;
 
+import android.os.Handler;
+
 import com.siema.morse.model.Char;
+import com.siema.morse.model.Dot;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Klasa odpowiedzialna za transmisj� informacji Morse'm
@@ -23,7 +23,13 @@ public class Broadcaster {
 
     private Iterator<Char> iterator;
     private List<Char> code;
-    private ScheduledExecutorService worker;
+    private Handler worker = new Handler();
+    private Runnable task = new Runnable() {
+        @Override
+        public void run() {
+            transmitNextSignal();
+        }
+    };
 
     public Broadcaster(Translator translator){
 		this.translator = translator;
@@ -35,8 +41,24 @@ public class Broadcaster {
     public void sendMessage(String message){
         this.message = message;
         this.code = translator.translate(message);
+//        this.code = new ArrayList<Char>();
+//        this.code.add(new Dot());
+//        this.code.add(new Dot());
+//        this.code.add(new Dot());
+//        this.code.add(new Dot());
+//        this.code.add(new Dot());
+//        this.code.add(new Dot());
+//        this.code.add(new Dot());
+//        this.code.add(new Dot());
+//        this.code.add(new Dot());
+//        this.code.add(new Dot());
+//        this.code.add(new Dot());
+//        this.code.add(new Dot());
+//        this.code.add(new Dot());
+//        this.code.add(new Dot());
+
         iterator = code.iterator();
-        worker = Executors.newSingleThreadScheduledExecutor();
+        worker =  new Handler();
         transmitting = true;
 
         transmitNextSignal();
@@ -45,22 +67,21 @@ public class Broadcaster {
     private void transmitNextSignal(){
         if(!iterator.hasNext()){
             this.transmitionEnded();
+            return;
         }
 
         Char morse = iterator.next();
 
         if(morse.isEmitSound()){
-            transmitter.transmit(morse.getTime());
+            if(!transmitter.transmit(morse.getTime())){
+                if(morse instanceof Dot)
+                    transmitter.transmitShort();
+                else
+                    transmitter.transmitLong();
+            }
         }
 
-        Runnable task = new Runnable() {
-            @Override
-            public void run() {
-                transmitNextSignal();
-            }
-        };
-
-        worker.schedule(task, morse.getTime(), TimeUnit.SECONDS);
+        worker.postDelayed(task, morse.getTime());
 
     }
 

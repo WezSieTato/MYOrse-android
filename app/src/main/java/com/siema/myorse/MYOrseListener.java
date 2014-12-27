@@ -125,8 +125,8 @@ public class MYOrseListener extends BroadcastReceiver implements BroadcasterDele
 
     @Override
     public void broadcasterDidEndTransmition(Broadcaster morseTransmitter) {
+//        SMSSender.sendMessage(phoneNumber, context.getString(R.string.TRANSMITTION_MORSE_ENDED));
         transmitting = false;
         phoneNumber = null;
-        SMSSender.sendMessage(phoneNumber, context.getString(R.string.TRANSMITTION_MORSE_ENDED));
     }
 }
