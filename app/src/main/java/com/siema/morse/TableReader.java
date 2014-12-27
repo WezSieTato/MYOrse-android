@@ -1,16 +1,17 @@
 package com.siema.morse;
 
+import com.siema.morse.model.Char;
+import com.siema.morse.model.Dash;
+import com.siema.morse.model.DelayAfterMorseChar;
+import com.siema.morse.model.Dot;
+
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.siema.morse.model.*;
 
 /**
  * Klasa posiadaj�ca statyczn� funkcj� zwracaj�c� tablic� z wczytanymi parametrami z pliku
@@ -42,8 +43,8 @@ public class TableReader {
                     } else if (text.charAt(i) == '-') {
                         array.add(dash);
                     }
-                    if (i != text.length() - 1)
-                        array.add(delay);
+//                    if (i != text.length() - 1)
+//                        array.add(delay);
                 }
 
                 table.addCode(array, text.charAt(0));

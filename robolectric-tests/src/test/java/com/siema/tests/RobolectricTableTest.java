@@ -32,14 +32,14 @@ public class RobolectricTableTest {
         List< Char > code = morseTable.codeForKey('c');
 
         assertTrue(code.get(0) instanceof Dash );
-        assertTrue(code.get(1) instanceof DelayAfterMorseChar );
-        assertTrue(code.get(2) instanceof Dot );
-        assertTrue(code.get(3) instanceof DelayAfterMorseChar );
-        assertTrue(code.get(4) instanceof Dash );
-        assertTrue(code.get(5) instanceof DelayAfterMorseChar );
-        assertTrue(code.get(6) instanceof Dot );
+//        assertTrue(code.get(1) instanceof DelayAfterMorseChar );
+        assertTrue(code.get(1) instanceof Dot );
+//        assertTrue(code.get(3) instanceof DelayAfterMorseChar );
+        assertTrue(code.get(2) instanceof Dash );
+//        assertTrue(code.get(5) instanceof DelayAfterMorseChar );
+        assertTrue(code.get(3) instanceof Dot );
 
-        assertEquals(7, code.size());
+        assertEquals(4, code.size());
     }
 
     @Test
@@ -75,19 +75,22 @@ public class RobolectricTableTest {
 
         //a
         assertTrue(code.get(0) instanceof Dot );
-        assertTrue(code.get(1) instanceof DelayAfterMorseChar );
-        assertTrue(code.get(2) instanceof Dash );
-        assertTrue(code.get(3) instanceof DelayAfterWord );
+//        assertTrue(code.get(1) instanceof DelayAfterMorseChar );
+        assertTrue(code.get(1) instanceof Dash );
+        assertTrue(code.get(2) instanceof DelayAfterWord );
 
         //b
-        assertTrue(code.get(4) instanceof Dash );
-        assertTrue(code.get(5) instanceof DelayAfterChar );
+        assertTrue(code.get(3) instanceof Dash );
+        assertTrue(code.get(4) instanceof Dot );
+        assertTrue(code.get(5) instanceof Dot );
+        assertTrue(code.get(6) instanceof Dot );
+        assertTrue(code.get(7) instanceof DelayAfterChar );
 
         //c
-        assertTrue(code.get(6) instanceof Dash );
-        assertTrue(code.get(7) instanceof DelayAfterMorseChar );
         assertTrue(code.get(8) instanceof Dash );
-        assertTrue(code.get(9) instanceof DelayAfterMorseChar );
+//        assertTrue(code.get(7) instanceof DelayAfterMorseChar );
+        assertTrue(code.get(9) instanceof Dash );
+//        assertTrue(code.get(9) instanceof DelayAfterMorseChar );
         assertTrue(code.get(10) instanceof Dash );
 
         assertEquals(11, code.size());

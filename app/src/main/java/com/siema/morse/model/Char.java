@@ -11,7 +11,7 @@ package com.siema.morse.model;
  *  @param defaultTime defaultowy czas w konstruktorze bezargumentowym
  */
 public abstract class Char {
-	public final static long defaultTime = 1000;
+	public final static long defaultTime = 750;
 	
 	private boolean emitSound;
     private long time;

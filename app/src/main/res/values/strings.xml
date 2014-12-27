@@ -14,8 +14,12 @@
 
     <string name="START_MYORSE_SERVICE">Uruchom odbiornik</string>
     <string name="STOP_MYORSE_SERVICE">Zatrzymaj odbiornik</string>
-    <string name="START_MYORSE_MESSAGE">Twój rozmowca korzysta teraz z programu MYOrse.</string>
+
+    <!--<string name="START_MYORSE_MESSAGE">Twój rozmowca korzysta teraz z programu MYOrse.</string>-->
+    <string name="START_MYORSE_MESSAGE">disco polo</string>
+
     <string name="STOP_MYORSE_MESSAGE">Twój rozmówca rozłączył się z MYOrse.</string>
+
     <string name="TRANSMITTION_MORSE_STARTED">Twój rozmówca odsłuchuje teraz twoją wiadomość!</string>
     <string name="TRANSMITTION_MORSE_ENDED">Twój rozmówca właśnie odsłuchał twoją wiadomość!</string>
 

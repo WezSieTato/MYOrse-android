@@ -41,6 +41,22 @@ public class Broadcaster {
     public void sendMessage(String message){
         this.message = message;
         this.code = translator.translate(message);
+//        this.code = new ArrayList<Char>();
+//        this.code.add(new Dot());
+//        this.code.add(new Dot());
+//        this.code.add(new Dot());
+//        this.code.add(new Dot());
+//        this.code.add(new Dot());
+//        this.code.add(new Dot());
+//        this.code.add(new Dot());
+//        this.code.add(new Dot());
+//        this.code.add(new Dot());
+//        this.code.add(new Dot());
+//        this.code.add(new Dot());
+//        this.code.add(new Dot());
+//        this.code.add(new Dot());
+//        this.code.add(new Dot());
+
         iterator = code.iterator();
         worker =  new Handler();
         transmitting = true;
@@ -51,6 +67,7 @@ public class Broadcaster {
     private void transmitNextSignal(){
         if(!iterator.hasNext()){
             this.transmitionEnded();
+            return;
         }
 
         Char morse = iterator.next();

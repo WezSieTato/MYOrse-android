@@ -9,7 +9,7 @@ package com.siema.morse.model;
  */
 public class Dash extends SoundChar {
 	public Dash(long time){
-		super(3*time);	
+		super(3*time);
 	}
 
 	public Dash() {
