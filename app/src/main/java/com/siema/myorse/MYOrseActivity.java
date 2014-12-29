@@ -14,7 +14,12 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.thalmic.myo.AbstractDeviceListener;
+import com.thalmic.myo.Arm;
+import com.thalmic.myo.DeviceListener;
 import com.thalmic.myo.Hub;
+import com.thalmic.myo.Myo;
+import com.thalmic.myo.XDirection;
 import com.thalmic.myo.scanner.ScanActivity;
 
 import java.util.ArrayList;
@@ -30,6 +35,7 @@ public class MYOrseActivity extends Activity {
     private final String PreferencesKeyName = "MYOrsePreferencesKeyName";
     private final String PreferencesKeyPhone = "MYOrsePreferencesKeyPhone";
     private final String PreferencesKeyBool = "MYOrsePreferencesKeyBool";
+    private final String PreferencesKeyBoolSMS = "MYOrsePreferencesKeyBoolSMS";
 
     private MYOrseListener listener;
 
@@ -38,10 +44,37 @@ public class MYOrseActivity extends Activity {
     private Button btnPickContact;
     private CheckBox checkBoxSMS;
 
+    private int synced = 0;
+
+    private DeviceListener myoSyncListener = new AbstractDeviceListener() {
+        @Override
+        public void onArmSync(Myo myo, long timestamp, Arm arm, XDirection xDirection) {
+            ++synced;
+            updateUI();
+        }
+
+        @Override
+        public void onArmUnsync(Myo myo, long timestamp) {
+            --synced;
+            updateUI();
+        }
+
+        private void updateUI(){
+            btnStartStop.setEnabled(canStartReceiver());
+            TextView txt = (TextView)findViewById(R.id.txtNumberSyn);
+            txt.setText(String.valueOf(synced));
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myorse);
+
+        Hub hub = Hub.getInstance();
+        if (!hub.init(this, getPackageName())) {
+        }
+        hub.addListener(myoSyncListener);
 
         lblUsername = (TextView) findViewById(R.id.lblUsername);
         btnStartStop = (Button) findViewById(R.id.btnStartStop);
@@ -63,24 +96,12 @@ public class MYOrseActivity extends Activity {
             ContactInfo info = new ContactInfo(name);
             info.setPhoneNumbers(listPhones);
             setContact(info, false);
-
         }
 
-        Hub hub = Hub.getInstance();
-        if (!hub.init(this)) {
-//            finish();
-//            return;
-        }
+        boolean isSMS = preferences.getBoolean(PreferencesKeyBoolSMS, false);
+        checkBoxSMS.setChecked(isSMS);
 
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.myorse, menu);
-//
-//        return true;
-//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -94,12 +115,22 @@ public class MYOrseActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void checkBoxSMSOnClick(View v){
+        CheckBox checkBox = (CheckBox)v;
+        Context context = getApplicationContext();
+        SharedPreferences preferences = context.getSharedPreferences(PreferencesKey, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(PreferencesKeyBoolSMS, checkBox.isChecked());
+        editor.commit();
+
+    }
+
     public void buttonPickContactOnClick(View v) {
         Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
         startActivityForResult(intent, PICK_CONTACT);
     }
 
-    public void buttonStartStopContactOnClick(View v) {
+    public void buttonStartStopOnClick(View v) {
         boolean enabled = listener.isEnabled();
         listener.setEnabledSMSSending(checkBoxSMS.isChecked());
         listener.setEnabled(!enabled);
@@ -107,6 +138,9 @@ public class MYOrseActivity extends Activity {
         checkBoxSMS.setEnabled(enabled);
         String txt = getString(enabled ? R.string.START_MYORSE_SERVICE : R.string.STOP_MYORSE_SERVICE);
         btnStartStop.setText(txt);
+
+        Button myo = (Button)findViewById(R.id.btnMYO);
+        myo.setEnabled(enabled);
 
     }
 
@@ -120,7 +154,7 @@ public class MYOrseActivity extends Activity {
     private void setContact(ContactInfo info, boolean save) {
         listener.setUsername(info);
         lblUsername.setText(info.getName());
-        btnStartStop.setEnabled(true);
+        btnStartStop.setEnabled(canStartReceiver());
 
         if (save) {
             Context context = getApplicationContext();
@@ -139,6 +173,10 @@ public class MYOrseActivity extends Activity {
         setContact(info, true);
     }
 
+    private boolean canStartReceiver(){
+        return listener.getUsername() != null && synced > 0;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -155,6 +193,16 @@ public class MYOrseActivity extends Activity {
                         }
                     }
                 }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Hub.getInstance().removeListener(myoSyncListener);
+
+        if (isFinishing()) {
+            Hub.getInstance().shutdown();
         }
     }
 }

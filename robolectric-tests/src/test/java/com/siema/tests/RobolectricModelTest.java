@@ -49,4 +49,5 @@ public class RobolectricModelTest {
         assertFalse(morse.isEmitSound());
         assertEquals(Char.defaultTime * 9, morse.getTime());
     }
+
 }

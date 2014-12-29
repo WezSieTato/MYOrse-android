@@ -9,14 +9,16 @@
     <string name="not_available">Nie nawiązano</string>
     <string name="pick_person">Wybierz nadawce</string>
     <string name="sms_sending">Wysyłaj smsy:</string>
+    <string name="synchonized">Zsynchronizowano:</string>
 
     <string name="no_number_phone">Wybrany kontakt, nie posiada numeru telefonu!</string>
 
     <string name="START_MYORSE_SERVICE">Uruchom odbiornik</string>
     <string name="STOP_MYORSE_SERVICE">Zatrzymaj odbiornik</string>
 
-    <!--<string name="START_MYORSE_MESSAGE">Twój rozmowca korzysta teraz z programu MYOrse.</string>-->
-    <string name="START_MYORSE_MESSAGE">disco polo</string>
+    <string name="START_MYORSE_MESSAGE">Twój rozmowca korzysta teraz z programu MYOrse.</string>
+    <!--<string name="START_MYORSE_MESSAGE">Allah akbar! Gin!</string>-->
+    <string name="INTERRUPT_MYORSE_MESSAGE">Twój rozmówca przerwał odsłuchiwanie wiadomości.</string>
 
     <string name="STOP_MYORSE_MESSAGE">Twój rozmówca rozłączył się z MYOrse.</string>
 

@@ -2,6 +2,7 @@ package com.siema.tests;
 
 import com.siema.RobolectricGradleTestRunner;
 import com.siema.morse.MessagePreparator;
+import com.siema.morse.Receiver;
 import com.siema.morse.Table;
 import com.siema.morse.TableReader;
 import com.siema.morse.Translator;
@@ -12,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -42,6 +44,19 @@ public class RobolectricTableTest {
         assertEquals(4, code.size());
     }
 
+    @Test
+    public void testCharacterForCode(){
+        Table morseTable = TableReader.readFile(Robolectric.application.getResources().openRawResource(R.raw.morse_table));
+        List< Char > code = new ArrayList<Char>();
+        code.add(new Dot());
+        code.add(new Dash());
+        code.add(new Dash());
+        code.add(new Dash());
+
+        Character key = morseTable.charForCode(code);
+        Character expected = 'j';
+        assertEquals(expected, key);
+    }
     @Test
     public void testMessagePreparator() throws Exception {
         Table morseTable = TableReader.readFile(Robolectric.application.getResources().openRawResource(R.raw.morse_table));
@@ -86,7 +101,7 @@ public class RobolectricTableTest {
         assertTrue(code.get(6) instanceof Dot );
         assertTrue(code.get(7) instanceof DelayAfterChar );
 
-        //c
+        //0
         assertTrue(code.get(8) instanceof Dash );
 //        assertTrue(code.get(7) instanceof DelayAfterMorseChar );
         assertTrue(code.get(9) instanceof Dash );
@@ -95,6 +110,30 @@ public class RobolectricTableTest {
 
         assertEquals(11, code.size());
 
+    }
+
+    @Test
+    public void testMorseReceiver(){
+        Table morseTable = TableReader.readFile(Robolectric.application.getResources().openRawResource(R.raw.morse_table));
+        Receiver receiver = new Receiver(morseTable);
+
+        receiver.putDot();
+        receiver.putDash();
+        receiver.putDelay();
+        receiver.putDelay();
+
+        receiver.putDash();
+        receiver.putDot();
+        receiver.putDot();
+        receiver.putDot();
+        receiver.putDelay();
+
+        receiver.putDash();
+        receiver.putDash();
+        receiver.putDash();
+
+        String expected = "a bo";
+        assertEquals(expected, receiver.getMessage());
     }
 
 }

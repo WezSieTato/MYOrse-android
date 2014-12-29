@@ -29,8 +29,7 @@ public class MYOTransmitter implements Transmitter {
     private void vibrate(boolean isShort){
         Hub hub = Hub.getInstance();
         ArrayList< Myo > devices = hub.getConnectedDevices();
-        for (Myo myo : devices){
-            myo.vibrate(isShort ? Myo.VibrationType.SHORT : Myo.VibrationType.LONG);
-        }
+        Myo myo = devices.get(0);
+        myo.vibrate(isShort ? Myo.VibrationType.SHORT : Myo.VibrationType.LONG);
     }
 }

@@ -41,27 +41,20 @@ public class Broadcaster {
     public void sendMessage(String message){
         this.message = message;
         this.code = translator.translate(message);
-//        this.code = new ArrayList<Char>();
-//        this.code.add(new Dot());
-//        this.code.add(new Dot());
-//        this.code.add(new Dot());
-//        this.code.add(new Dot());
-//        this.code.add(new Dot());
-//        this.code.add(new Dot());
-//        this.code.add(new Dot());
-//        this.code.add(new Dot());
-//        this.code.add(new Dot());
-//        this.code.add(new Dot());
-//        this.code.add(new Dot());
-//        this.code.add(new Dot());
-//        this.code.add(new Dot());
-//        this.code.add(new Dot());
 
         iterator = code.iterator();
         worker =  new Handler();
         transmitting = true;
 
         transmitNextSignal();
+    }
+
+    public void stopTransmition(){
+        worker.removeCallbacksAndMessages(task);
+        worker.removeCallbacks(task);
+        transmitting = false;
+        if(broadcasterDelegate != null)
+            broadcasterDelegate.broadcasterDidInterruptTransmition(this);
     }
 
     private void transmitNextSignal(){
@@ -90,6 +83,7 @@ public class Broadcaster {
         if(broadcasterDelegate != null)
             broadcasterDelegate.broadcasterDidEndTransmition(this);
     }
+
 
     public BroadcasterDelegate getBroadcasterDelegate() {
         return broadcasterDelegate;

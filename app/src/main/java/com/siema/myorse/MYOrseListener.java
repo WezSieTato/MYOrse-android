@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.telephony.SmsMessage;
 import android.widget.Toast;
 
@@ -12,11 +13,12 @@ import com.siema.morse.BroadcasterDelegate;
 import com.siema.morse.Table;
 import com.siema.morse.TableReader;
 import com.siema.morse.Translator;
+import com.thalmic.myo.Hub;
 
 /**
  * Created by marcin on 08/12/14.
  */
-public class MYOrseListener extends BroadcastReceiver implements BroadcasterDelegate {
+public class MYOrseListener extends BroadcastReceiver implements BroadcasterDelegate, MYOReceiverDelegate {
 
     private boolean enabled;
     private boolean transmitting;
@@ -25,6 +27,7 @@ public class MYOrseListener extends BroadcastReceiver implements BroadcasterDele
     private String phoneNumber;
     private Context context;
     private Broadcaster broadcaster;
+    private MYOReceiver receiver;
 
     public MYOrseListener(Context context) {
         super();
@@ -38,6 +41,8 @@ public class MYOrseListener extends BroadcastReceiver implements BroadcasterDele
         broadcaster = new Broadcaster(translator);
         broadcaster.setBroadcasterDelegate(this);
         broadcaster.setTransmitter(new MYOTransmitter());
+        receiver = new MYOReceiver(morseTable);
+        receiver.setDelegate(this);
     }
 
     public boolean isEnabledSMSSending() {
@@ -61,7 +66,11 @@ public class MYOrseListener extends BroadcastReceiver implements BroadcasterDele
     }
 
     public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+
+        if(this.enabled && !enabled && isTransmitting()){
+            broadcaster.stopTransmition();
+            receiver.stop();
+        }
 
         if (enabledSMSSending) {
             String msg = context.getString(enabled ? R.string.START_MYORSE_MESSAGE : R.string.STOP_MYORSE_MESSAGE);
@@ -71,6 +80,7 @@ public class MYOrseListener extends BroadcastReceiver implements BroadcasterDele
                 SMSSender.sendMessage(number, msg);
             }
         }
+        this.enabled = enabled;
     }
 
     public boolean isTransmitting() {
@@ -125,7 +135,38 @@ public class MYOrseListener extends BroadcastReceiver implements BroadcasterDele
 
     @Override
     public void broadcasterDidEndTransmition(Broadcaster morseTransmitter) {
-//        SMSSender.sendMessage(phoneNumber, context.getString(R.string.TRANSMITTION_MORSE_ENDED));
+
+        final Handler handler = new Handler();
+
+        Runnable task = new Runnable() {
+            private int count = 0;
+            @Override
+            public void run() {
+                Hub.getInstance().getConnectedDevices().get(0).notifyUserAction();
+                ++count;
+                if(count < 3)
+                    handler.postDelayed(this, 200);
+                else
+                  receiver.start(phoneNumber);
+            }
+        };
+        task.run();
+//        handler.
+
+    }
+
+    @Override
+    public void broadcasterDidInterruptTransmition(Broadcaster morseTransmitter) {
+        if(enabledSMSSending)
+            SMSSender.sendMessage(phoneNumber, context.getString(R.string.INTERRUPT_MYORSE_MESSAGE));
+        transmitting = false;
+        phoneNumber = null;
+    }
+
+    @Override
+    public void messageSended(String message) {
+        if((message == null || message.length() == 0) && enabledSMSSending)
+                SMSSender.sendMessage(phoneNumber, context.getString(R.string.TRANSMITTION_MORSE_ENDED));
         transmitting = false;
         phoneNumber = null;
     }
