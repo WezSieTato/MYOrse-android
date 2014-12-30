@@ -49,17 +49,17 @@ public class Broadcaster {
         transmitNextSignal();
     }
 
-    public void stopTransmition(){
+    public void stopTransmission(){
         worker.removeCallbacksAndMessages(task);
         worker.removeCallbacks(task);
         transmitting = false;
         if(broadcasterDelegate != null)
-            broadcasterDelegate.broadcasterDidInterruptTransmition(this);
+            broadcasterDelegate.broadcasterDidInterruptTransmission(this);
     }
 
     private void transmitNextSignal(){
         if(!iterator.hasNext()){
-            this.transmitionEnded();
+            this.transmissionEnded();
             return;
         }
 
@@ -78,10 +78,10 @@ public class Broadcaster {
 
     }
 
-    private void transmitionEnded(){
+    private void transmissionEnded(){
         transmitting = false;
         if(broadcasterDelegate != null)
-            broadcasterDelegate.broadcasterDidEndTransmition(this);
+            broadcasterDelegate.broadcasterDidEndTransmission(this);
     }
 
 

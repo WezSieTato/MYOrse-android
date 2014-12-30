@@ -119,18 +119,21 @@ public class RobolectricTableTest {
 
         receiver.putDot();
         receiver.putDash();
-        receiver.putDelay();
-        receiver.putDelay();
+        assertFalse(receiver.putDelay());
+        assertFalse(receiver.putDelay());
 
         receiver.putDash();
         receiver.putDot();
         receiver.putDot();
         receiver.putDot();
-        receiver.putDelay();
+        assertFalse(receiver.putDelay());
 
         receiver.putDash();
         receiver.putDash();
         receiver.putDash();
+        assertFalse(receiver.putDelay());
+        assertFalse(receiver.putDelay());
+        assertTrue(receiver.putDelay());
 
         String expected = "a bo";
         assertEquals(expected, receiver.getMessage());

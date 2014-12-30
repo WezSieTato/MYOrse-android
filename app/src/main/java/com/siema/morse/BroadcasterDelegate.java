@@ -2,6 +2,6 @@ package com.siema.morse;
 
 public interface BroadcasterDelegate {
 
-	public void broadcasterDidEndTransmition(Broadcaster morseTransmitter);
-    public void broadcasterDidInterruptTransmition(Broadcaster morseTransmitter);
+	public void broadcasterDidEndTransmission(Broadcaster morseTransmitter);
+    public void broadcasterDidInterruptTransmission(Broadcaster morseTransmitter);
 }

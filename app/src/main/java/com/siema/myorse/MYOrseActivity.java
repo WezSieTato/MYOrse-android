@@ -133,7 +133,10 @@ public class MYOrseActivity extends Activity {
     public void buttonStartStopOnClick(View v) {
         boolean enabled = listener.isEnabled();
         listener.setEnabledSMSSending(checkBoxSMS.isChecked());
-        listener.setEnabled(!enabled);
+        if(!enabled)
+            listener.start();
+        else
+            listener.stop();;
         btnPickContact.setEnabled(enabled);
         checkBoxSMS.setEnabled(enabled);
         String txt = getString(enabled ? R.string.START_MYORSE_SERVICE : R.string.STOP_MYORSE_SERVICE);

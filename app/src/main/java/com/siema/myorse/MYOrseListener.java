@@ -65,10 +65,20 @@ public class MYOrseListener extends BroadcastReceiver implements BroadcasterDele
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void start(){
+        setEnabled(true);
+    }
+
+    public void stop(){
+        setEnabled(false);
+    }
+    private void setEnabled(boolean enabled) {
+
+        if(this.enabled == enabled)
+            return;
 
         if(this.enabled && !enabled && isTransmitting()){
-            broadcaster.stopTransmition();
+            broadcaster.stopTransmission();
             receiver.stop();
         }
 
@@ -134,12 +144,11 @@ public class MYOrseListener extends BroadcastReceiver implements BroadcasterDele
     }
 
     @Override
-    public void broadcasterDidEndTransmition(Broadcaster morseTransmitter) {
-
-        final Handler handler = new Handler();
+    public void broadcasterDidEndTransmission(Broadcaster morseTransmitter) {
 
         Runnable task = new Runnable() {
-            private int count = 0;
+            private byte count = 0;
+            private final Handler handler = new Handler();
             @Override
             public void run() {
                 Hub.getInstance().getConnectedDevices().get(0).notifyUserAction();
@@ -151,12 +160,11 @@ public class MYOrseListener extends BroadcastReceiver implements BroadcasterDele
             }
         };
         task.run();
-//        handler.
 
     }
 
     @Override
-    public void broadcasterDidInterruptTransmition(Broadcaster morseTransmitter) {
+    public void broadcasterDidInterruptTransmission(Broadcaster morseTransmitter) {
         if(enabledSMSSending)
             SMSSender.sendMessage(phoneNumber, context.getString(R.string.INTERRUPT_MYORSE_MESSAGE));
         transmitting = false;

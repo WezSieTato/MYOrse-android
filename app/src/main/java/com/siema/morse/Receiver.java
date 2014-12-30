@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by marcin on 27/12/14.
+ * Created by Marcin Stepnowski on 27/12/14.
  */
 public class Receiver {
     private List<Char> code = new ArrayList<Char>();
@@ -68,6 +68,25 @@ public class Receiver {
         return false;
     }
 
+    public String getMessage() {
+        if(!code.isEmpty()){
+            translateChar();
+            putLast();
+        }
+
+        if(message.equals(" "))
+            return "";
+
+        if(message.endsWith(" ")){
+            return message.substring(0, message.length() - 1);
+        }
+
+        return message;
+    }
+
+    public String getStringCode() {
+        return stringCode;
+    }
     private void translateChar(){
         if(code.size() == 0){
             lastCharacter = ' ';
@@ -95,28 +114,10 @@ public class Receiver {
                     else
                         message += "-";
                 }
-                message += "?";
             message += ">";
         }
         lastCharacter = null;
         lastInvalidCode = null;
     }
 
-    public String getMessage() {
-        if(!code.isEmpty()){
-            translateChar();
-            putLast();
-        }
-
-        if(message.equals(" "))
-            return "";
-//        message += " ";
-//        message += stringCode;
-
-        return message;
-    }
-
-    public String getStringCode() {
-        return stringCode;
-    }
 }

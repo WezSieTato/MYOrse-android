@@ -15,7 +15,6 @@ public class MYOReceiver extends AbstractDeviceListener {
     private Receiver morseReceiver;
     private String phoneNumber;
     private MYOReceiverDelegate delegate;
-    private boolean firstPose;
 
     public MYOReceiver(Table morseTable) {
         this.morseReceiver = new Receiver(morseTable);
@@ -24,7 +23,6 @@ public class MYOReceiver extends AbstractDeviceListener {
 
     public void start(String phoneNumber){
         this.phoneNumber = phoneNumber;
-        firstPose = true;
         Hub.getInstance().addListener(this);
         Hub.getInstance().setLockingPolicy(Hub.LockingPolicy.NONE);
         for (Myo myo : Hub.getInstance().getConnectedDevices()){
@@ -42,10 +40,6 @@ public class MYOReceiver extends AbstractDeviceListener {
 
     @Override
     public void onPose(Myo myo, long l, Pose pose) {
-        if(firstPose){
-            firstPose = false;
-//            return;
-        }
 
         switch (pose) {
             case FIST:
@@ -70,18 +64,7 @@ public class MYOReceiver extends AbstractDeviceListener {
             case UNKNOWN:
             case DOUBLE_TAP:
 
-
         }
-    }
-
-    @Override
-    public void onConnect(Myo myo, long timestamp) {
-        super.onConnect(myo, timestamp);
-    }
-
-    @Override
-    public void onDisconnect(Myo myo, long timestamp) {
-        super.onDisconnect(myo, timestamp);
     }
 
     private void sendMessage(){

@@ -2,7 +2,6 @@ package com.siema.morse;
 
 import com.siema.morse.model.Char;
 import com.siema.morse.model.Dash;
-import com.siema.morse.model.DelayAfterMorseChar;
 import com.siema.morse.model.Dot;
 
 import java.io.BufferedReader;
@@ -14,23 +13,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Klasa posiadaj�ca statyczn� funkcj� zwracaj�c� tablic� z wczytanymi parametrami z pliku
+ * Klasa posiadająca statyczną funkcję zwracającą tablicę z wczytanymi parametrami z pliku
  *
  * @author Quetz
  */
 public class TableReader {
 
     public static Table readFile(InputStream is) {
-//        File file = new File(path);
         Table table = new Table();
 
         try {
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-            String text = null;
+            String text;
             Dot dot = new Dot();
             Dash dash = new Dash();
-            DelayAfterMorseChar delay = new DelayAfterMorseChar();
 
             while ((text = reader.readLine()) != null) {
 
@@ -43,8 +40,7 @@ public class TableReader {
                     } else if (text.charAt(i) == '-') {
                         array.add(dash);
                     }
-//                    if (i != text.length() - 1)
-//                        array.add(delay);
+
                 }
 
                 table.addCode(array, text.charAt(0));
