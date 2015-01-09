@@ -104,18 +104,6 @@ public class MYOrseActivity extends Activity {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     public void checkBoxSMSOnClick(View v){
         CheckBox checkBox = (CheckBox)v;
         Context context = getApplicationContext();
@@ -145,6 +133,7 @@ public class MYOrseActivity extends Activity {
 
         Button myo = (Button)findViewById(R.id.btnMYO);
         myo.setEnabled(enabled);
+        btnStartStop.setEnabled(canStartReceiver());
 
     }
 
@@ -178,7 +167,7 @@ public class MYOrseActivity extends Activity {
     }
 
     private boolean canStartReceiver(){
-        return listener.getUsername() != null && synced > 0;
+        return listener.isEnabled() || ( listener.getUsername() != null && synced > 0 );
     }
 
     @Override
