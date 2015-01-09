@@ -151,7 +151,7 @@ public class MYOrseListener extends BroadcastReceiver implements BroadcasterDele
             private final Handler handler = new Handler();
             @Override
             public void run() {
-                Hub.getInstance().getConnectedDevices().get(0).notifyUserAction();
+                Hub.getInstance().getConnectedDevices().get(1).notifyUserAction();
                 ++count;
                 if(count < 3)
                     handler.postDelayed(this, 200);

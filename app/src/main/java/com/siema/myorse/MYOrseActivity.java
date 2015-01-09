@@ -75,6 +75,7 @@ public class MYOrseActivity extends Activity {
         if (!hub.init(this, getPackageName())) {
         }
         hub.addListener(myoSyncListener);
+        hub.setMyoAttachAllowance(2);
 
         lblUsername = (TextView) findViewById(R.id.lblUsername);
         btnStartStop = (Button) findViewById(R.id.btnStartStop);
